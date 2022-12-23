@@ -1,0 +1,6 @@
+{
+	"appId": "com.taskMate.todo",
+	"appName": "taskMate",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}

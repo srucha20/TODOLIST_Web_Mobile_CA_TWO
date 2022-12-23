@@ -1,8 +1,8 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.todo.app',
-  appName: 'todo',
+  appId: 'com.taskMate.todo',
+  appName: 'taskMate',
   webDir: 'www',
   bundledWebRuntime: false,
   plugins: {

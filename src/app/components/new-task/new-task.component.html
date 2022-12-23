@@ -1,0 +1,59 @@
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar mode = "ios">
+    <div class="close-outline" (click)="modalController.dismiss()"><ion-icon name="close-outline"></ion-icon></div>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">    
+<div class="container">
+      <ion-input 
+        autofocus="true" 
+        placeholder="Enter new task"
+        #taskName 
+        [value]="todoService.formData!.name"
+        required 
+        (ionChange)="updateService(taskName.value)"
+      ></ion-input>
+      <ion-grid>
+        <ion-row>
+        <ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
+          <ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+        </ion-col>
+        </ion-row>
+      </ion-grid>
+  <table>
+    <tbody>
+      <tr>
+        <td>
+          <ion-icon name="lock-closed-outline" class="lock-icon" *ngIf="showlock" (click)="lockOrientation()"></ion-icon>
+          <ion-icon name="lock-open-outline" *ngIf="showunlock" (click)="unlockOrientation()"></ion-icon>
+        </td>
+        <td>
+          <span class="rounded-rectangle">
+            <ion-icon name="calendar-clear-outline"></ion-icon>
+            <span>Today</span>
+          </span>
+        </td>
+        <td>
+          <div class="rounded" (click)="toggleCategory()">
+            <ion-icon id="radio-icon" [ngClass]="{'radio-business': todoService.formData.category == 'business', 'radio-personal': todoService.formData.category == 'personal'}" name="radio-button-on-outline"></ion-icon>
+          </div>
+        </td>
+        <td>
+          <!-- <ion-avatar>
+            <img [src]="selectedImage ? selectedImage : 'assets/icon/favicon.png'" />
+          </ion-avatar> -->
+          <ion-button class="camera-btn" (click)="photoService.addNewToGallery()">
+          <ion-icon name="camera" class="camera"></ion-icon>
+          </ion-button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button (click)="createNewTask()">
+    Add task &nbsp; <ion-icon name="chevron-up-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+</ion-content>

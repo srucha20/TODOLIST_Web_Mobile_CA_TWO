@@ -1,20 +1,75 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
+<ion-header class="ion-no-border" [translucent]="true">
+  <ion-toolbar mode="md">
+    <ion-buttons slot="start">
+      <ion-button>
+          <img src="../../../assets/icon/Header_icon.png" class="header-ion">&nbsp;&nbsp;
+          <strong class="header-title">Task Mate</strong>          
+      </ion-button>
+    </ion-buttons>
+
+    <ion-buttons slot="end">
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content [fullscreen]="true" class="container-wrapper">
+  <div id="container">      
+    <strong class="slogan">Let's Achieve</strong>
+    <span class="sub-header">categories</span>
+    
+    <ion-slides pager="false" [options]="sliderConfig">
+      <ion-slide class="categories">
+          <div class="categories-buttons business" >
+            <span class="task-count">
+              {{todoService.getCount('business')}} task<ng-container 
+              *ngIf="todoService.getCount('business') > 1"
+              >s</ng-container>
+            </span>
+            <span class="categories-name"> Business</span>
+            <ion-progress-bar 
+            mode="ios" 
+            [value]="todoService.getCategoryProgressCount('business')"
+            ></ion-progress-bar>
+          </div>
+      </ion-slide>
+      <ion-slide class="categories">
+        <div class="categories-buttons personal">
+          <span class="task-count">
+            {{todoService.getCount('personal')}} task<ng-container 
+            *ngIf="todoService.getCount('personal') > 1"
+            >s</ng-container>
+            </span>
+          <span class="categories-name"> Personal</span>
+          <ion-progress-bar 
+          mode="ios" 
+          [value]="todoService.getCategoryProgressCount('personal')"
+          ></ion-progress-bar>
+        </div>
+      </ion-slide>
+    </ion-slides>
+  
+    <span class="todays-header">TODAY'S TASKs</span>
+    <div class="task-list">
+      <app-task *ngFor="let task of todoService.list" [task]="task" (onEditTaskClicked)="openEditPage($event)"></app-task>
+    </div>
   </div>
+
+  <ion-fab id="trigger-button" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button mode="ios">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>  
+
+  <ion-modal
+    mode="ios"
+    trigger="trigger-button"
+    [isOpen]="false"
+    [breakpoints]="[0.1, 0.5, 1]"
+    [initialBreakpoint]="1"
+  >
+  <ng-template>
+    <app-new-task (onNewTaskClicked)="addNewTask($event)"></app-new-task>
+  </ng-template>
+</ion-modal>
+
 </ion-content>
